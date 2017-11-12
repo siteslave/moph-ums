@@ -1,0 +1,70 @@
+<%- include('./layout.html') -%>
+
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">หน้าหลัก</li>
+    </ol>
+  </nav>
+  <form action="/" method="get">
+    <div class="row" style="padding-bottom: 5px;">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input name="query" type="text" class="form-control" placeholder="ระบุคำค้นหา...">
+            <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit"><span class="fa fa-search"></span> ค้นหา</button>
+                <a class="btn btn-success" href="/new"> <span class="fa fa-plus"></span> เพิ่มรายการ</a>
+              </span>
+          </div>
+        </div>
+      </div>
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ชื่อผู้ใช้งาน</th>
+        <th scope="col">ชื่อ - สกุล</th>
+        <th scope="col">ประเภท</th>
+        <th scope="col">ใช้งาน</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach((user) => { %>
+        <tr>
+          <th scope="row">
+            <%=user.username%>
+          </th>
+          <td>
+            <%=user.first_name%>
+              <%=user.last_name%>
+          </td>
+          <td>
+            <%=user.type_name%>
+          </td>
+          <td>
+            <% if (user.is_active === 'Y') { %>
+              <span class="fa fa-check"></span>
+              <% } %>
+                <% if (user.is_active === 'N') { %>
+                  <span class="fa fa-times"></span>
+                  <% } %>
+          </td>
+          <td>
+            <div class="btn-group">
+              <a href="/edit/<%=user.user_id%>" class="btn btn-success btn-sm">
+                <span class="fa fa-pencil"></span>
+              </a>
+              <a href="/remove/<%=user.user_id%>" class="btn btn-danger btn-sm">
+                <span class="fa fa-trash"></span>
+              </a>
+            </div>
+          </td>
+        </tr>
+        <% }); %>
+
+
+    </tbody>
+  </table>
+
+  <%- include('./footer.html') -%>

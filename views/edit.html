@@ -1,0 +1,72 @@
+<%- include('./layout.html') -%>
+
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/">หน้าหลัก</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">แก้ไขข้อมูล</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-6">
+      <% if(session.error) { %>
+        <div class="alert alert-danger" role="alert">
+          <%=session.error%>
+        </div>
+      <% } %>
+      <form action="/edit" method="post">
+        <input type="hidden" name="userId" value="<%=user.user_id%>">
+        <div class="form-group">
+          <label for="username">ชื่อผู้ใช้งาน</label>
+          <input type="email" disabled value="<%=user.username%>" class="form-control" name="username" id="username" aria-describedby="usernameHelper" placeholder="ชื่อผู้ใช้งาน">
+          <small id="usernameHelper" class="form-text text-muted">ระบุชื่อผู้ใช้งาน</small>
+        </div>
+        <div class="form-group">
+          <label for="password">รหัสผ่าน</label>
+          <input type="password" class="form-control" name="password" id="password" placeholder="พิมพ์รหัสผ่านใหม่หากต้องการเปลี่ยน">
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="firstName">ชื่อ</label>
+              <input type="firstName" value="<%=user.first_name%>" class="form-control" name="firstName" id="firstName" placeholder="ชื่อ">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="lastName">สกุล</label>
+              <input type="lastName" class="form-control" value="<%=user.last_name%>" name="lastName" id="lastName" placeholder="สกุล">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="userType">ประเภท</label>
+            <select class="form-control" id="userType" name="userType">
+                <% types.forEach((type) => { %>
+                  <% if (user.type_id === type.type_id) {%>
+                    <option value="<%=type.type_id%>" selected><%=type.type_name%></option>  
+                  <%} else {%>
+                    <option value="<%=type.type_id%>"><%=type.type_name%></option>
+                  <%}%>
+                <% }); %>
+            </select>
+          </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <% if(user.is_active === 'Y') {%>
+              <input type="checkbox" checked class="form-check-input" name="isActive"> 
+            <%} else {%>
+              <input type="checkbox" class="form-check-input" name="isActive"> 
+              <%}%>
+            ใช้งาน
+          </label>
+        </div>
+        <button type="submit" class="btn btn-success">บันทึก</button>
+        <a href="/" class="btn btn-danger">กลับหน้าหลัก</a>
+      </form>
+    </div>
+  </div>
+
+  <%- include('./footer.html') -%>

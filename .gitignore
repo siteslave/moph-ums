@@ -1,0 +1,10 @@
+node_modules/*
+typings/*
+npm-debug.log
+.settings/*
+.git/*
+bower_components/*
+.vscode
+package-lock.json
+app
+process.json
